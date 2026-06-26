@@ -217,8 +217,8 @@ app.post("/api/documents/verify", upload.single("pdf"), (req, res) => {
 app.get("/api/certificate/:serial", authenticate, (req, res) => {
   const certs = {
     "01": {
-      subject: "CN=Nguyen Van A, emailAddress=nguyenvana@citizen.vn, C=VN",
-      issuer: "CN=Demo Root CA, O=UTE Lab, C=VN",
+      subject: "CN=Nguyen Van A, emailAddress=nguyenvana@citizen.vn, O=UTE, C=VN",
+      issuer: "CN=Demo Root CA, O=UTE, C=VN",
       serial: "01",
       validFrom: "2025-01-01",
       validUntil: "2026-12-31",
@@ -227,8 +227,8 @@ app.get("/api/certificate/:serial", authenticate, (req, res) => {
       status: "active",
     },
     "02": {
-      subject: "CN=Tran Thi B, emailAddress=tranthib@gov.vn, C=VN",
-      issuer: "CN=Demo Root CA, O=UTE , C=VN",
+      subject: "CN=Tran Thi B, emailAddress=tranthib@gov.vn, O=UTE, C=VN",
+      issuer: "CN=Demo Root CA, O=UTE, C=VN",
       serial: "02",
       validFrom: "2025-01-01",
       validUntil: "2026-12-31",
