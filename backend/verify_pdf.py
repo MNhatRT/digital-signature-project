@@ -30,12 +30,20 @@ def verify(pdf_path):
         sig = sigs[0]
         status = validate_pdf_signature(sig, vc)
 
+        # Kiem tra chu ky co bao phu toan bo file khong
+        coverage = sig.evaluate_signature_coverage()
+        from pyhanko.sign.validation.status import SignatureCoverageLevel
+        whole_file_covered = (coverage == SignatureCoverageLevel.ENTIRE_FILE)
+
+        # File chi hop le khi: chu ky dung + noi dung nguyen ven + bao phu toan file
+        is_intact = status.intact and whole_file_covered
+
         print(json.dumps({
-            "valid": status.valid and status.intact,
+            "valid": status.valid and is_intact,
             "signer": str(status.signing_cert.subject.human_friendly) if status.signing_cert else "Unknown",
             "signedAt": str(status.signer_reported_dt) if status.signer_reported_dt else "Unknown",
             "algorithm": "RSA-PSS 2048 + SHA-256",
-            "intactDocument": status.intact,
+            "intactDocument": is_intact,
             "validSignature": status.valid,
             "certTrusted": status.trusted,
         }))
