@@ -163,10 +163,12 @@ app.post(
             .json({ error: "Ky so that bai", detail: stderr });
         }
         const ms = Date.now() - start;
+        const fileId = path.basename(outputPath);
         console.log(`[SIGN] ${req.user.name} ky xong trong ${ms}ms`);
         res.json({
           message: "Ky so thanh cong",
           signedFile: outputPath,
+          downloadId: fileId,
           signingTime: ms,
           signer: req.user.name,
           algorithm: "RSA-PSS 2048 + SHA-256",
@@ -175,6 +177,17 @@ app.post(
     );
   },
 );
+
+// ── API: Tai file da ky ve ───────────────────────────
+app.get("/api/documents/download/:fileId", (req, res) => {
+  const filePath = path.join(__dirname, "uploads", req.params.fileId);
+  if (!fs.existsSync(filePath)) {
+    return res
+      .status(404)
+      .json({ error: "File khong ton tai hoac da het han" });
+  }
+  res.download(filePath, "signed_document.pdf");
+});
 
 // ── API: Xác minh chữ ký ─────────────────────────────
 app.post("/api/documents/verify", upload.single("pdf"), (req, res) => {
