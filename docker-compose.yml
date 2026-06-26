@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3443:3443"
+    volumes:
+      - ./users:/users
+      - ./ca:/ca
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: digital_signature
+    ports:
+      - "3306:3306"

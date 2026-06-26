@@ -1,0 +1,24 @@
+C:\digital-signature\
+├── ca\
+│   ├── certs\       root-ca.crt, root-ca.crl, root-ca.srl
+│   ├── private\     root-ca.key (AES-256 protected)
+│   ├── newcerts\
+│   ├── openssl.cnf
+│   ├── index.txt
+│   ├── serial
+│   └── crlnumber
+├── users\
+│   ├── citizen.key/.crt/.csr/.p12
+│   └── officer.key/.crt/.csr/.p12
+├── backend\
+│   ├── server.js        (HTTPS + JWT + Role auth)
+│   ├── keystore.py      (AES-256 key store)
+│   ├── sign_pdf.py      (pyHanko PDF signing)
+│   ├── security_test.py (6 test cases + benchmark)
+│   ├── keystore.enc     (encrypted keys)
+│   ├── test_input.pdf
+│   ├── test_signed.pdf  ← PDF đã ký thật!
+│   ├── server.key/.crt  (TLS certificate)
+│   ├── Dockerfile
+│   └── package.json
+└── docker-compose.yml
